@@ -46,10 +46,18 @@ jobs:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_PASSWORD }}
 
-      - name: Build and push Docker image
+      - name: Build and push app Docker image
         uses: docker/build-push-action@v5.1.0
         with:
           context: .
           file: ./Dockerfile_front
           push: true
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/ci-project-app:latest, ${{ secrets.DOCKER_HUB_USERNAME }}/ci-project-app:${{ github.event.release.tag_name }}
+
+      - name: Build and push api Docker image
+        uses: docker/build-push-action@v5.1.0
+        with:
+          context: .
+          file: ./Dockerfile_back
+          push: true
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/ci-project-api:latest, ${{ secrets.DOCKER_HUB_USERNAME }}/ci-project-api:${{ github.event.release.tag_name }}
