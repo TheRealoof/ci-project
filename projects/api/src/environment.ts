@@ -11,4 +11,5 @@ const getVariable = (name: string): string => {
 
 export default {
   port: getVariable('PORT'),
+  apiBaseUrl: getVariable('API_BASE_URL'),
 }
