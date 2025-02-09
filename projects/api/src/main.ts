@@ -43,7 +43,7 @@ router.get('/', (_req, res) => {
 router.use('/auth', auth);
 router.use('/user', verifyToken, user);
 
-const server = app.listen(environment.port, () => {
+const server = app.listen(environment.apiPort, () => {
   console.log(`Listening at ${environment.apiBaseUrl}`);
 });
 server.on('error', console.error);

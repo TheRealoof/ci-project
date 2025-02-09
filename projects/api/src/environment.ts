@@ -10,7 +10,7 @@ const getVariable = (name: string): string => {
 }
 
 export default {
-  port: getVariable('PORT'),
+  apiPort: getVariable('API_PORT'),
   apiBaseUrl: getVariable('API_BASE_URL'),
   discordClientId: getVariable('DISCORD_CLIENT_ID'),
   discordClientSecret: getVariable('DISCORD_CLIENT_SECRET'),
