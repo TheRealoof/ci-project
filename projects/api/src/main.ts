@@ -8,8 +8,8 @@ import * as path from 'path';
 import environment from './environment';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
-import auth from './routes/auth';
-import user from './routes/user';
+import auth from './routes/auth.route';
+import user from './routes/user.route';
 
 const app = express();
 
