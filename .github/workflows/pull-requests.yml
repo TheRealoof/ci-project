@@ -38,4 +38,39 @@ jobs:
       # Prepend any command with "nx-cloud record --" to record its logs to Nx Cloud
       # - run: npx nx-cloud record -- echo Hello World
       # Nx Affected runs only tasks affected by the changes in this PR/commit. Learn more: https://nx.dev/ci/features/affected
-      - run: npx nx affected -t lint test build --verbose
+
+      - name: Reset nx
+        run: npx nx reset
+
+      - name: Run Tests
+        run: npx nx run-many --target=test --all --verbose
+
+      - name: Run Lint
+        run: npx nx run-many --target=lint --all --verbose
+
+      - name: Run Build
+        run: npx nx run-many --target=build --all --verbose
+
+      # Run api and e2e tests in parallel
+      - name: Run API and E2E
+        run: |
+          node ./dist/projects/api/main.js &
+          API_PID=$!
+          npx nx e2e api-e2e
+          kill $API_PID
+
+      # Build docker image from Dockerfile_front and try to reach the app
+      - name: Build and test Docker Image Front
+        run: |
+          docker build -t app -f ./Dockerfile_front .
+          docker run -d -p 8080:80 app
+          sleep 5
+          curl http://localhost:8080
+
+      # Build docker image from Dockerfile_back and try to reach the app
+      - name: Build and test Docker Image Back
+        run: |
+          docker build -t api -f ./Dockerfile_back .
+          docker run -d -p 3333:3333 api
+          sleep 5
+          curl http://localhost:3333/api
