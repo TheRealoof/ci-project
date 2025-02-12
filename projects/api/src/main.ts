@@ -10,6 +10,7 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import auth from './routes/auth.route';
 import user from './routes/user.route';
+import verify from './routes/verify.route';
 
 const app = express();
 
@@ -19,6 +20,8 @@ app.use(cors({
 }));
 
 app.use(cookieParser());
+
+app.use(express.json());
 
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
 
@@ -42,6 +45,7 @@ router.get('/', (_req, res) => {
 
 router.use('/auth', auth);
 router.use('/user', verifyToken, user);
+router.use('/verify', verify);
 
 const server = app.listen(environment.apiPort, () => {
   console.log(`Listening at ${environment.apiBaseUrl}`);
