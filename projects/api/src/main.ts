@@ -11,6 +11,7 @@ import cookieParser from 'cookie-parser';
 import auth from './routes/auth.route';
 import user from './routes/user.route';
 import verify from './routes/verify.route';
+import messages from './routes/messages.route';
 
 const app = express();
 
@@ -46,6 +47,7 @@ router.get('/', (_req, res) => {
 router.use('/auth', auth);
 router.use('/user', verifyToken, user);
 router.use('/verify', verify);
+router.use('/messages', verifyToken, messages)
 
 const server = app.listen(environment.apiPort, () => {
   console.log(`Listening at ${environment.apiBaseUrl}`);

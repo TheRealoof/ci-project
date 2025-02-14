@@ -3,7 +3,7 @@ import environment from '../environment';
 export default {
   getDiscordAuthUrl(redirectUri: string): string {
     const clientId = environment.discordClientId;
-    const scope = 'guilds identify';
+    const scope = 'identify guilds';
     const params = new URLSearchParams({
       client_id: clientId,
       response_type: 'code',
